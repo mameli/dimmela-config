@@ -37,15 +37,11 @@ The `${output}` placeholder at the bottom of the prompt is required. Handy repla
 - Dictated filenames containing words such as “underscore” and “dot”
 - Incomplete time references without inventing “today,” “tomorrow,” or similar details
 
-## Speed and cost
+## Why Luna?
 
-In my informal tests, post-processing generated roughly a couple hundred tokens per second and usually started responding within a few seconds. For short dictations, the wait feels small enough for everyday use. The exact result varies with the model, provider load, network connection, and length of the prompt and transcript.
+I chose GPT-5.6 Luna Pro because it is fast enough for everyday dictation and follows this prompt reliably. Nemotron 3.5 Lightning was faster, but its smaller model did not handle the instructions well enough. I had similar results with `gpt-oss-120b`: the speed was fine, but the edited text was less reliable.
 
-The fastest model was not necessarily the best one. I chose Luna because it followed the editing instructions more reliably, even though some alternatives responded sooner.
-
-A short post-processing request costs far less than one US cent with the models I tested. At my usage level, that works out to a very small pay-as-you-go expense rather than a recurring subscription.
-
-For comparison, [Wispr Flow](https://wisprflow.ai/pricing) offers a limited free plan, while its paid individual plan costs roughly **$12–15 per month**, depending on the billing cycle. Handy with local transcription and usage-based OpenRouter post-processing is far cheaper for my use, although the two products do not provide exactly the same features.
+Post-processing usually starts within a few seconds and a short request costs far less than one US cent. For my usage, this is much cheaper than a recurring subscription such as [Wispr Flow Pro](https://wisprflow.ai/pricing), which costs roughly $12–15 per month depending on the billing cycle.
 
 ## Privacy and cost
 
