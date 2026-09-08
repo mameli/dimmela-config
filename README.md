@@ -2,9 +2,12 @@
 
 [Handy](https://github.com/cjpais/handy) is a free, open-source speech-to-text app that can transcribe audio locally and paste the result into any application.
 
-This repository contains the prompt I use to clean up Handy's raw transcriptions with an LLM through OpenRouter. It removes false starts and repetitions, resolves spoken corrections, fixes likely recognition errors, and improves punctuation without summarizing or changing the intended meaning.
+This repository contains the prompts I use to clean up Handy's raw transcriptions with an LLM through OpenRouter. They remove false starts and repetitions, resolve spoken corrections, fix likely recognition errors, and improve punctuation without summarizing or changing the intended meaning.
 
-The complete prompt is available in [`prompt.md`](prompt.md).
+Two prompts are available:
+
+- [`prompt.md`](prompt.md) cleans up a transcription in its original language.
+- [`translate-to-english.md`](translate-to-english.md) cleans up the transcription and translates it into natural English.
 
 ## How the setup works
 
@@ -17,16 +20,16 @@ The complete prompt is available in [`prompt.md`](prompt.md).
 4. Open the new **Post Process** section in the sidebar.
 5. Select **OpenRouter** as the provider and enter your OpenRouter API key.
 6. Select the language model you want to use for post-processing. A capable instruction-following model works best; I currently use **GPT-5.6 Luna Pro**.
-7. Create a prompt in Handy and paste the complete contents of [`prompt.md`](prompt.md) into **Prompt Instructions**.
+7. Create a prompt in Handy and paste the complete contents of [`prompt.md`](prompt.md) or [`translate-to-english.md`](translate-to-english.md) into **Prompt Instructions**.
 
    ![OpenRouter and GPT-5.6 Luna Pro configured in Handy Post Process](assets/handy-post-processing.png)
 
 8. Configure the dedicated post-processing hotkey.
 9. Use that hotkey when you want Handy to transcribe, clean up, and paste your speech.
 
-The `${output}` placeholder at the bottom of the prompt is required. Handy replaces it with the raw transcription before sending the request to the selected model.
+The `${output}` placeholder at the bottom of each prompt is required. Handy replaces it with the raw transcription before sending the request to the selected model.
 
-## What the prompt handles
+## What the prompts handle
 
 - Filler words, stuttering, repetitions, and abandoned sentences
 - Spoken corrections such as “five tests, actually six”
