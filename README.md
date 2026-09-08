@@ -10,11 +10,17 @@ The complete prompt is available in [`prompt.md`](prompt.md).
 
 1. Install and configure [Handy](https://handy.computer/).
 2. In **Models**, download and select a local transcription model. I currently use **Nemotron Streaming 3.5**.
+
+   ![Nemotron Streaming 3.5 selected in Handy](assets/handy-model.png)
+
 3. Open **Settings → Advanced → Experimental Features** and enable **Post Processing**.
 4. Open the new **Post Process** section in the sidebar.
 5. Select **OpenRouter** as the provider and enter your OpenRouter API key.
 6. Select the language model you want to use for post-processing. A capable instruction-following model works best; I currently use **GPT-5.6 Luna Pro**.
 7. Create a prompt in Handy and paste the complete contents of [`prompt.md`](prompt.md) into **Prompt Instructions**.
+
+   ![OpenRouter and GPT-5.6 Luna Pro configured in Handy Post Process](assets/handy-post-processing.png)
+
 8. Configure the dedicated post-processing hotkey.
 9. Use that hotkey when you want Handy to transcribe, clean up, and paste your speech.
 
@@ -31,15 +37,21 @@ The `${output}` placeholder at the bottom of the prompt is required. Handy repla
 - Dictated filenames containing words such as “underscore” and “dot”
 - Incomplete time references without inventing “today,” “tomorrow,” or similar details
 
+## Speed and cost
+
+In my informal tests, post-processing generated roughly a couple hundred tokens per second and usually started responding within a few seconds. For short dictations, the wait feels small enough for everyday use. The exact result varies with the model, provider load, network connection, and length of the prompt and transcript.
+
+The fastest model was not necessarily the best one. I chose Luna because it followed the editing instructions more reliably, even though some alternatives responded sooner.
+
+A short post-processing request costs far less than one US cent with the models I tested. At my usage level, that works out to a very small pay-as-you-go expense rather than a recurring subscription.
+
+For comparison, [Wispr Flow](https://wisprflow.ai/pricing) offers a limited free plan, while its paid individual plan costs roughly **$12–15 per month**, depending on the billing cycle. Handy with local transcription and usage-based OpenRouter post-processing is far cheaper for my use, although the two products do not provide exactly the same features.
+
 ## Privacy and cost
 
 Handy performs the initial speech recognition locally when you use a downloaded transcription model. When cloud post-processing is enabled, the resulting raw transcript is sent through OpenRouter to the model you selected. Your audio is not part of that post-processing request.
 
-The cost depends on the selected model and the length of the prompt and transcript. For short dictations, low-cost models can make each request extremely inexpensive, but the setup is not completely free.
-
-## Screenshots
-
-Screenshots of the Handy model and post-processing settings will be added here.
+The cost depends on the selected model and the length of the prompt and transcript. OpenRouter prices and model availability may change over time.
 
 ## References
 
