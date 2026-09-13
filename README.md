@@ -4,10 +4,11 @@
 
 This repository contains the prompts I use to clean up Handy's raw transcriptions with an LLM through OpenRouter. They remove false starts and repetitions, resolve spoken corrections, fix likely recognition errors, and improve punctuation without summarizing or changing the intended meaning.
 
-Two prompts are available:
+Three prompts are available:
 
 - [`prompt.md`](prompt.md) cleans up a transcription in its original language.
 - [`translate-to-english.md`](translate-to-english.md) cleans up the transcription and translates it into natural English.
+- [`translate-to-x.md`](translate-to-x.md) turns an Italian dictation into a natural English post or reply for X.
 
 ## How the setup works
 
@@ -20,7 +21,7 @@ Two prompts are available:
 4. Open the new **Post Process** section in the sidebar.
 5. Select **OpenRouter** as the provider and enter your OpenRouter API key.
 6. Select the language model you want to use for post-processing. A capable instruction-following model works best; I currently use **GPT-5.6 Luna Pro**.
-7. Create a prompt in Handy and paste the complete contents of [`prompt.md`](prompt.md) or [`translate-to-english.md`](translate-to-english.md) into **Prompt Instructions**.
+7. Create a prompt in Handy and paste the complete contents of the prompt you want to use into **Prompt Instructions**.
 
    ![OpenRouter and GPT-5.6 Luna Pro configured in Handy Post Process](assets/handy-post-processing.png)
 
