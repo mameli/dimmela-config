@@ -4,11 +4,13 @@
 
 This repository contains the prompts I use to clean up Handy's raw transcriptions with an LLM through OpenRouter. They remove false starts and repetitions, resolve spoken corrections, fix likely recognition errors, and improve punctuation without summarizing or changing the intended meaning.
 
-Three prompts are available:
+Five prompts are available:
 
 - [`prompt.md`](prompt.md) cleans up a transcription in its original language.
 - [`translate-to-english.md`](translate-to-english.md) cleans up the transcription and translates it into natural English.
 - [`translate-to-x.md`](translate-to-x.md) turns an Italian dictation into a natural English post or reply for X.
+- [`compose-x-post.md`](compose-x-post.md) turns a rambling spoken brief about what you want to say into a finished X post, capturing the intent rather than transcribing it.
+- [`compose-text.md`](compose-text.md) does the same for any kind of text, such as an email, a chat message, or a note, adapting the tone to the recipient.
 
 ## How the setup works
 
