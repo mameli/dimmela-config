@@ -1,62 +1,60 @@
-# Better Handy transcriptions with AI post-processing
+# Prompts for Dimmela
 
-[Handy](https://github.com/cjpais/handy) is a free, open-source speech-to-text app that can transcribe audio locally and paste the result into any application.
+[Dimmela](https://dimmela.app) is a macOS menu-bar app for dictation. It transcribes your speech locally and pastes the text where you are typing. Optionally, an LLM rewrites each Dictation with a Mode: a prompt file or a skill that you choose.
 
-This repository contains the prompts I use to clean up Handy's raw transcriptions with an LLM through OpenRouter. They remove false starts and repetitions, resolve spoken corrections, fix likely recognition errors, and improve punctuation without summarizing or changing the intended meaning.
+This repository contains the prompt files I use as Modes. They remove false starts and repetitions, resolve spoken corrections, fix likely recognition errors and improve punctuation, without summarizing or changing what you meant.
 
 Five prompts are available:
 
-- [`prompt.md`](prompt.md) cleans up a transcription in its original language.
-- [`translate-to-english.md`](translate-to-english.md) cleans up the transcription and translates it into natural English.
+- [`prompt.md`](prompt.md) cleans up a Transcript in its original language.
+- [`translate-to-english.md`](translate-to-english.md) cleans up the Transcript and translates it into natural English.
 - [`translate-to-x.md`](translate-to-x.md) turns an Italian dictation into a natural English post or reply for X.
-- [`compose-x-post.md`](compose-x-post.md) turns a rambling spoken brief about what you want to say into a finished X post, capturing the intent rather than transcribing it.
-- [`compose-text.md`](compose-text.md) does the same for any kind of text, such as an email, a chat message, or a note, adapting the tone to the recipient.
+- [`compose-x-post.md`](compose-x-post.md) turns a rambling spoken brief about what you want to say into a finished X post. It captures the intent instead of transcribing the words.
+- [`compose-text.md`](compose-text.md) does the same for any kind of text, such as an email, a chat message or a note, and adapts the tone to the recipient.
 
-## How the setup works
+## Setup
 
-1. Install and configure [Handy](https://handy.computer/).
-2. In **Models**, download and select a local transcription model. I currently use **Nemotron Streaming 3.5**.
+1. Install Dimmela:
 
-   ![Nemotron Streaming 3.5 selected in Handy](assets/handy-model.png)
+   ```sh
+   brew install --cask mameli/dimmela/dimmela
+   ```
 
-3. Open **Settings → Advanced → Experimental Features** and enable **Post Processing**.
-4. Open the new **Post Process** section in the sidebar.
-5. Select **OpenRouter** as the provider and enter your OpenRouter API key.
-6. Select the language model you want to use for post-processing. A capable instruction-following model works best; I currently use **GPT-5.6 Luna Pro**.
-7. Create a prompt in Handy and paste the complete contents of the prompt you want to use into **Prompt Instructions**.
+2. Clone this repository.
+3. In **Settings › Post-processing**, set the provider. Dimmela works with any OpenAI-compatible provider. I use [OpenRouter](https://openrouter.ai/) with the model `anthropic/claude-haiku-5.5` and **Reasoning** set to **Low**. Paste your API key and click **Test Connection**.
+4. In **Settings › Modes**, click **Add Folder…** under **Mode sources** and select your clone.
+5. Under **Available**, enable the prompts you want. Drag them to set their order: the first nine get the Mode digits 1–9. Select the **Default Mode**.
+6. Hold or tap `fn+Space` and speak. While you dictate, press a digit to use another Mode, `0` for no Post-processing, or `shift` to show the list.
 
-   ![OpenRouter and GPT-5.6 Luna Pro configured in Handy Post Process](assets/handy-post-processing.png)
+## How Dimmela uses these files
 
-8. Configure the dedicated post-processing hotkey.
-9. Use that hotkey when you want Handy to transcribe, clean up, and paste your speech.
+Dimmela reads the prompt file at every Dictation, so your edits apply to the next one. It sends the file as the system prompt, followed by the terms in your Vocabulary, and the Transcript as the user message.
 
-The `${output}` placeholder at the bottom of each prompt is required. Handy replaces it with the raw transcription before sending the request to the selected model.
+The `${output}` line at the end of each file comes from Handy, where these prompts started. Dimmela removes it before it sends the prompt.
 
 ## What the prompts handle
 
-- Filler words, stuttering, repetitions, and abandoned sentences
+- Filler words, stuttering, repetitions and abandoned sentences
 - Spoken corrections such as “five tests, actually six”
 - Dictation commands such as “delete this part” or “write this instead”
 - Likely speech-recognition errors inferred from context
-- Grammar, punctuation, paragraphing, and natural sentence structure
-- Numbers, dates, measurements, names, and negations
+- Grammar, punctuation, paragraphing and natural sentence structure
+- Numbers, dates, measurements, names and negations
 - Dictated filenames containing words such as “underscore” and “dot”
-- Incomplete time references without inventing “today,” “tomorrow,” or similar details
+- Incomplete time references, without inventing “today,” “tomorrow” or similar details
 
-## Why Luna?
+## Improving the prompts
 
-I chose GPT-5.6 Luna Pro because it is fast enough for everyday dictation and follows this prompt reliably. Nemotron 3.5 Lightning was faster, but its smaller model did not handle the instructions well enough. I had similar results with `gpt-oss-120b`: the speed was fine, but the edited text was less reliable.
-
-Post-processing usually starts within a few seconds and a short request costs far less than one US cent. For my usage, this is much cheaper than a recurring subscription such as [Wispr Flow Pro](https://wisprflow.ai/pricing), which costs roughly $12–15 per month depending on the billing cycle.
+In **Settings › Post-processing**, turn on **Keep a Post-processing log**. Dimmela then writes each Transcript, Mode, model and LLM answer to `~/.dimmela/post-processing.jsonl`. Add a `"comment"` where the answer was not what you wanted, and give the log to a model to improve the prompt.
 
 ## Privacy and cost
 
-Handy performs the initial speech recognition locally when you use a downloaded transcription model. When cloud post-processing is enabled, the resulting raw transcript is sent through OpenRouter to the model you selected. Your audio is not part of that post-processing request.
+Dimmela transcribes your speech on your Mac. When a Dictation uses a Mode, Dimmela sends the Transcript, the prompt and your Vocabulary to your provider. Your audio is never sent.
 
-The cost depends on the selected model and the length of the prompt and transcript. OpenRouter prices and model availability may change over time.
+The cost depends on the model and on the length of the prompt and Transcript. Provider prices and model availability can change.
 
 ## References
 
-- [Handy repository](https://github.com/cjpais/handy)
-- [Handy post-processing documentation](https://handy.computer/docs/post-processing)
+- [Dimmela](https://dimmela.app)
+- [Dimmela repository](https://github.com/mameli/Dimmela)
 - [OpenRouter](https://openrouter.ai/)
